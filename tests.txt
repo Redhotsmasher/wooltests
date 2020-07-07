@@ -1,0 +1,5 @@
+simple1.c: task helloworld returns its input i, SPAWN(helloworld) SYNC(helloworld)
+simple2.c: task helloworld returns its input i, task hello2 increments global res2, SPAWN(helloworld) SPAWN(hello2) SYNC(hello2) SYNC(helloworld)
+array.c: task arraytest increments value i (input) in an array, SPAWN(arraytest)*n SYNC(arraytest)*n
+recursion.c: recursive sum, SPAWN a task which recursively spawns more tasks to a predefined depth.
+fibonacci.c: recursive naive Fibonacci.

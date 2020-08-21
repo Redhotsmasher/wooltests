@@ -1,4 +1,5 @@
-CFLAGS = -Wall -O0 -g -std=gnu99
+
+CFLAGS = -Wall -o0 -g -fno-debug-macro -std=gnu99
 IFLAGS = -I../wool/src -L../wool/src
 LFLAGS = -lwool -lpthread
 

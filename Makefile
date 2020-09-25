@@ -5,11 +5,11 @@ LFLAGS = -lwool -lpthread
 
 .PHONY: all build ll unroll bin clean
 
+ll: simple1.ll simple2.ll simple3.ll simple4.ll simple5.ll array.ll recursion.ll fibonacci.ll typepun.ll pointerarith1.ll
+
 all: rmdummy ll unroll bin
 
 build: ll bin
-
-ll: simple1.ll simple2.ll simple3.ll simple4.ll simple5.ll array.ll recursion.ll fibonacci.ll typepun.ll pointerarith1.ll
 
 simple1.ll simple2.ll simple3.ll simple4.ll simple5.ll array.ll recursion.ll fibonacci.ll typepun.ll pointerarith1.ll:
 	clang $(CFLAGS) $(IFLAGS) src/$(patsubst %.ll,%.c,$@) -E -C -CC -o bin/$(patsubst %.ll,%_demacroed.c,$@)

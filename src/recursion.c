@@ -8,13 +8,13 @@ TASK_1(int, recurse, int, i) {
         SPAWN(recurse, i-1);
         return SYNC(recurse)+1;
     } else {
-        return 0;
+        return 1;
     }
 }
 
 int main(int argc, char** argv) {
     argc = wool_init(argc, argv);
-    SPAWN(recurse, 2);
+    SPAWN(recurse, 1);
     int sum = SYNC(recurse);
     wool_fini();
     assert(sum == 2);

@@ -7,7 +7,6 @@ gray=`tput setaf 7`
 magenta=`tput setaf 5`
 reset=`tput sgr0`
 tests=(simple1 simple2 simple3 simple4 simple5 array recursion fibonacci)
-#tests=(recursion)
 modes=("SC-Source" "SC-Optimal" "TSO-Source")
 modeparams=("--sc --source" "--sc --optimal" "--tso --source")
 length=0

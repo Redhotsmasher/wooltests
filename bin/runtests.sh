@@ -7,6 +7,7 @@ gray=`tput setaf 7`
 magenta=`tput setaf 5`
 reset=`tput sgr0`
 tests=(simple1 simple2 simple3 simple4 simple5 array recursion fibonacci)
+#tests=(recursion)
 modes=("SC-Source" "SC-Optimal" "TSO-Source")
 modeparams=("--sc --source" "--sc --optimal" "--tso --source")
 length=0
@@ -26,21 +27,14 @@ then
         exit 0
     fi
 else
-    printf "\nUsage:\n"
-    printf "\t./runtests.sh <number of runs per test> <number of wool threads> [timeout] \n"
-    printf "or\n"
-    printf "\t./runtests.sh\n"
-    printf "for interactive mode.\n\n"
-    exit 0
+    while ! (($numreps)) 2>/dev/null || [ $numreps -lt 0 ] ; do
+        read -p "Enter number of runs of each test: " numreps
+    done
+
+    while ! (($numwoolthreads)) 2>/dev/null || [ $numwoolthreads -lt 0 ] ; do
+        read -p "Enter number of wool threads: " numwoolthreads
+    done
 fi
-
-while ! (($numreps)) 2>/dev/null || [ $numreps -lt 0 ] ; do
-    read -p "Enter number of runs of each test: " numreps
-done
-
-while ! (($numwoolthreads)) 2>/dev/null || [ $numwoolthreads -lt 0 ] ; do
-    read -p "Enter number of wool threads: " numwoolthreads
-done
 
 if [ $# -lt 3 ]
 then

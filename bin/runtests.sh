@@ -62,10 +62,10 @@ for test in ${tests[@]} ; do
         while [ $itery -lt $iterper ] ; do
             #filename="${test}_${modes[$i]}_${printiter}"
             #echo $filename
+            #printf "DEBUG: %s\n" timeout $timeoutval" taskset -c 0-3 /usr/bin/time nidhugg "${modeparams[$i]}" --extfun-no-race=fprintf --extfun-no-race=printf --extfun-no-race=gettimeofday --extfun-no-race=getopt --print-progress-estimate "${test}"_u.ll -- -p "$numwoolthreads" > ./"${test}_${modes[$i]}_${itery}".log 2>&1"
             printf "Running test %s in mode %10s (%2d/%2d)..." $test "${modes[$i]}" $printiter $numreps
             timeout $timeoutval taskset -c 0-3 /usr/bin/time nidhugg ${modeparams[$i]} --extfun-no-race=fprintf --extfun-no-race=printf --extfun-no-race=gettimeofday --extfun-no-race=getopt --print-progress-estimate ${test}_u.ll -- -p $numwoolthreads > ./"${test}_${modes[$i]}_${itery}".log 2>&1
             result[$iterx * $iterper + $itery]=$?
-            #printf "DEBUG: %d\n" ${result[$iterx * $iterper + $itery]}
             case ${result[$iterx * $iterper + $itery]} in
                 0)
                     printf " ${pass}\n"

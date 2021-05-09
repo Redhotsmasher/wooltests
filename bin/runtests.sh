@@ -11,15 +11,14 @@ modes=("SC-Source" "SC-Optimal" "TSO-Source")
 modeparams=("--sc --source" "--sc --optimal" "--tso --source")
 length=0
 numreps=$1
-numwoolthreads=$2
-timeoutval=$3
+timeoutval=$2
 
 if [ $# -gt 0 ]
 then
     if [ $1 = "--help" -o $1 = "-help" -o $1 = "-h" -o $1 = "-?" -o $1 = "--usage" -o $# -gt 3 ]
     then
         printf "\nUsage:\n"
-        printf "\t./runtests.sh <number of runs per test> <number of wool threads> [timeout] \n"
+        printf "\t./runtests.sh <number of runs per test> [timeout] \n"
         printf "or\n"
         printf "\t./runtests.sh\n"
         printf "for interactive mode.\n\n"
@@ -29,13 +28,9 @@ else
     while ! (($numreps)) 2>/dev/null || [ $numreps -lt 0 ] ; do
         read -p "Enter number of runs of each test: " numreps
     done
-
-    while ! (($numwoolthreads)) 2>/dev/null || [ $numwoolthreads -lt 0 ] ; do
-        read -p "Enter number of wool threads: " numwoolthreads
-    done
 fi
 
-if [ $# -lt 3 ]
+if [ $# -lt 2 ]
 then
     timeoutval="1h"
 fi
@@ -61,7 +56,7 @@ for test in ${tests[@]} ; do
         printiter=1
         while [ $itery -lt $iterper ] ; do
             printf "Running test %s in mode %10s (%2d/%2d)..." $test "${modes[$i]}" $printiter $numreps
-            timeout $timeoutval taskset -c 0-3 /usr/bin/time nidhugg ${modeparams[$i]} --extfun-no-race=fprintf --extfun-no-race=printf --extfun-no-race=gettimeofday --extfun-no-race=getopt --print-progress-estimate ${test}_u.ll -- -p $numwoolthreads > ./"${test}_${modes[$i]}_${itery}".log 2>&1
+            timeout $timeoutval taskset -c 0-3 /usr/bin/time nidhugg ${modeparams[$i]} --extfun-no-race=fprintf --extfun-no-race=printf --extfun-no-race=gettimeofday --extfun-no-race=getopt --print-progress-estimate ${test}_u.ll -- -p 2 > ./"${test}_${modes[$i]}_${itery}".log 2>&1
             result[$iterx * $iterper + $itery]=$?
             case ${result[$iterx * $iterper + $itery]} in
                 0)
